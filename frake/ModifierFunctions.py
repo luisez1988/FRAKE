@@ -22,7 +22,7 @@ FRAKE for Anura3D
 import numpy as np
 import pandas as pd
 import math as mt
-import SamplingFunctions as sp
+from frake import SamplingFunctions as sp
 from scipy.signal import savgol_filter
 #%% Operation function.
 #DATA: DATA_PAR structure
