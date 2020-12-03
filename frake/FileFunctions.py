@@ -28,8 +28,11 @@ import pandas as pd
 
 
 #%% Opening the files
-def OpenFromCsv(filetype='csv'):
-    FolderName=TK.askdirectory() #promt user to get a folder  
+def OpenFromFolder(Path='', filetype='csv', auto_mode=True):
+    if (Path==''): #Default case
+        FolderName=TK.askdirectory() #promt user to get a folder  
+    else: # User writes path
+        FolderName=Path
     
     #Create a cell array for future structures
     a=0
@@ -42,7 +45,11 @@ def OpenFromCsv(filetype='csv'):
                 FullName="{}/{}".format(FolderName, filename) 
                 data = pd.read_csv(FullName)    
                 prompt="ID for input# {} : ".format(filename)
-                label=input(prompt)
+                if (auto_mode):
+                    label= str(a)
+                else:
+                    label=input(prompt)
+                    
                 if (a==1) :
                     DATA_PAR=[data]
                     ID_list=[label]
@@ -50,13 +57,18 @@ def OpenFromCsv(filetype='csv'):
                     DATA_PAR.append(data)
                     ID_list.append(label)            
                 continue
-        elif (filetype=='txt-s'):
+        elif (filetype=='txt'): #txt file
             if filename.endswith(".txt"):
                 a=a+1        
                 FullName="{}/{}".format(FolderName, filename) 
                 data = pd.read_fwf(FullName)    
                 prompt="ID for input# {} : ".format(filename)
-                label=input(prompt)
+                
+                if (auto_mode):
+                    label= str(a)
+                else:
+                    label=input(prompt)
+                    
                 if (a==1) :
                     DATA_PAR=[data]
                     ID_list=[label]
@@ -66,7 +78,7 @@ def OpenFromCsv(filetype='csv'):
                 continue
         continue
     
-    return DATA_PAR, ID_list;
+    return DATA_PAR, ID_list, FolderName;
 
 def OpenSingleCsv():
     FileName=TK.askopenfilename(initialdir = "/",title = "Select file",filetypes\
