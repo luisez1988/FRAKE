@@ -242,7 +242,7 @@ def GetAllinVector(DATA, var):
     for frame in DATA:
         Aux=frame[var]
         Aux=Aux.to_numpy(dtype ='float32')
-        Result=Aux
+        Result.append(Aux)
     #Result=np.array(Result)
     #Result=Result.T
     return Result
