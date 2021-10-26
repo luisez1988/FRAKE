@@ -18,7 +18,7 @@ setuptools.setup(
     description="Visualizing tool for Anura3D results",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='https://github.com/luisez1988/FRAKE',
+    url='https://github.com/luisez1988/FRAKE/archive/refs/tags/0.1.3.tar.gz',
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
