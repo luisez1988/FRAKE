@@ -21,7 +21,7 @@ FRAKE for Anura3D
 """
 import numpy as np
 import pandas as pd
-from frake import SamplingFunctions as Sf
+import SamplingFunctions as Sf
 import scipy.optimize as optimization
 from lmfit import Model
 #%% LSF fit to functions

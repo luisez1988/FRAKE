@@ -21,9 +21,9 @@ FRAKE for Anura3D
 #%% Supporting libraries
 import tkinter.filedialog as TK
 import pandas as pd
-from frake import SamplingFunctions as SF
-from frake import GraphFunctions as GF
-from frake import ModifierFunctions as MF
+import SamplingFunctions as SF
+import GraphFunctions as GF
+import ModifierFunctioins as MF
 import numpy as np
 import os
 #%% Definition of the ANURA3D class

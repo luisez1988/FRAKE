@@ -39,7 +39,9 @@ import seaborn as sns
 #palete set color palete
 
 def PlotAll(DATA, IDs, xx, yy, style='Paper', xlabel='default', ylabel='default', xsize=3, ysize=3, mode='-', hold=0 \
-            , palete='Normal', legendMode=True, lims=[0], varst=0, PlotName='default'):
+            , palete='Normal', legendMode=True, lims=[0,0,0,0,0], varst=0, PlotName='default', sample_span=1\
+               , linewith=0, markers=0, makersize=0):
+    
     if (xlabel=='default'):
         xlabel=xx
     if (ylabel=='default'):
@@ -56,8 +58,7 @@ def PlotAll(DATA, IDs, xx, yy, style='Paper', xlabel='default', ylabel='default'
         personalized_color=["#004488", '#BB5566', '#575757', '#DDAA33', '#000000', '#8A8A8A']
         Pt=sns.color_palette(personalized_color)        
     else:
-
-        Pt=sns.light_palette(sns.xkcd_rgb[palete],NIds+2,reverse=True)
+        Pt=palete
         #sns.set_palette(Pt)
 
 
@@ -80,7 +81,10 @@ def PlotAll(DATA, IDs, xx, yy, style='Paper', xlabel='default', ylabel='default'
             plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
             plt.rcParams['figure.dpi'] = 400
             plt.rcParams["figure.figsize"] = (xsize,ysize)
-            lw=1
+            if (linewith==0):
+                lw=1
+            else:
+                lw=linewith
 
     elif (style=='Slide'):
 
@@ -100,7 +104,10 @@ def PlotAll(DATA, IDs, xx, yy, style='Paper', xlabel='default', ylabel='default'
             plt.rcParams['figure.dpi'] = 400
             plt.rcParams["figure.figsize"] = (xsize,ysize)
             plt.rc('axes', linewidth=2)
-            lw=3
+            if (linewith==0):
+                lw=3
+            else:
+                lw=linewith
     elif (style=='Paths'):
             SMALL_SIZE = 8
             MEDIUM_SIZE = 10
@@ -117,7 +124,10 @@ def PlotAll(DATA, IDs, xx, yy, style='Paper', xlabel='default', ylabel='default'
             plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
             plt.rcParams['figure.dpi'] = 400
             plt.rcParams["figure.figsize"] = (xsize,ysize)
-            lw=1
+            if (linewith==0):
+                lw=1
+            else:
+                lw=linewith
     elif (style=='Scatter'):
             SMALL_SIZE = 8
             MEDIUM_SIZE = 10
@@ -134,7 +144,10 @@ def PlotAll(DATA, IDs, xx, yy, style='Paper', xlabel='default', ylabel='default'
             plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
             plt.rcParams['figure.dpi'] = 400
             plt.rcParams["figure.figsize"] = (xsize,ysize)
-            lw=1
+            if (linewith==0):
+                lw=1
+            else:
+                lw=linewith
 
 
         #else:
@@ -156,17 +169,25 @@ def PlotAll(DATA, IDs, xx, yy, style='Paper', xlabel='default', ylabel='default'
                     sns.scatterplot(x=xx, y=yy, data= Frame ,marker= mode, color=Pt[a-1], style= varst[1],\
                                 hue= varst[0], legend=False)
         else:
+            
+            if (markers==0):
+                aux_mode=mode
+            else:                    
+                aux_mode= '%s%s' %(mode, markers[a-1])
             if (PlotName=='default'):
-                plt.plot(Frame[xx],Frame[yy], mode, label=IDs[a-1],linewidth=lw,color=Pt[a-1])
+ 
+                plt.plot(Frame[xx][::sample_span],Frame[yy][::sample_span], aux_mode, label=IDs[a-1],\
+                         linewidth=lw,color=Pt[a-1])
             else:
-                PlotName.plot(Frame[xx],Frame[yy], mode, label=IDs[a-1],linewidth=lw,color=Pt[a-1])
+                PlotName.plot(Frame[xx][::sample_span],Frame[yy][::sample_span], aux_mode, label=IDs[a-1],\
+                              linewidth=lw,color=Pt[a-1])
 
     #plt.xlabel(xlabel)
     #plt.ylabel(ylabel)
     if (PlotName=='default'):
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
-        if (lims[0]!=0):
+        if (lims[4]==1):
             plt.ylim(lims[1])
             plt.xlim(lims[0])
             if (lims[2]==1):
@@ -181,7 +202,7 @@ def PlotAll(DATA, IDs, xx, yy, style='Paper', xlabel='default', ylabel='default'
     else:
         PlotName.set_xlabel(xlabel)
         PlotName.set_ylabel(ylabel)
-        if (lims[0]!=0):
+        if (lims[4]==1):
             PlotName.set_ylim(lims[1])
             PlotName.set_xlim(lims[0])
             if (lims[2]==1):

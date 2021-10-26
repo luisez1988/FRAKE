@@ -25,7 +25,14 @@ import os.path
 import scipy.io as sio
 import numpy as np
 import pandas as pd
+import re
 
+
+numbers = re.compile(r'(\d+)')
+def numericalSort(value):
+    parts = numbers.split(value)
+    parts[1::2] = map(int, parts[1::2])
+    return parts
 
 #%% Opening the files
 def OpenFromFolder(Path='', filetype='csv', auto_mode=True):
@@ -38,7 +45,7 @@ def OpenFromFolder(Path='', filetype='csv', auto_mode=True):
     a=0
     
     #loop trough files
-    for filename in os.listdir(FolderName):
+    for filename in sorted(os.listdir(FolderName), key=numericalSort):
         if (filetype=='csv'):
             if filename.endswith(".csv"):
                 a=a+1        
@@ -61,7 +68,7 @@ def OpenFromFolder(Path='', filetype='csv', auto_mode=True):
             if filename.endswith(".txt"):
                 a=a+1        
                 FullName="{}/{}".format(FolderName, filename) 
-                data = pd.read_fwf(FullName)    
+                data = pd.read_csv(FullName, sep='\s+')    
                 prompt="ID for input# {} : ".format(filename)
                 
                 if (auto_mode):
@@ -80,15 +87,41 @@ def OpenFromFolder(Path='', filetype='csv', auto_mode=True):
     
     return DATA_PAR, ID_list, FolderName;
 
-def OpenSingleCsv():
-    FileName=TK.askopenfilename(initialdir = "/",title = "Select file",filetypes\
-                                = (("csv files","*.csv"),("all files","*.*")))
-    data = pd.read_csv(FileName) 
-    prompt="ID for input# {} : ".format(FileName)
-    label=input(prompt)
-    DATA_PAR=[data]
-    ID_list=[label]
-    return DATA_PAR, ID_list;
+def OpenSingleFile(filetype='csv', fullpath='default'):
+    if (fullpath=='default'):
+        if (filetype=='csv'):
+            FileName=TK.askopenfilename(initialdir = "/",title = "Select file",filetypes\
+                                        = (("csv files","*.csv"),("all files","*.*")))
+            data = pd.read_csv(FileName) 
+            prompt="ID for input# {} : ".format(FileName)
+            label=input(prompt)
+            DATA_PAR=[data]
+            ID_list=[label]
+        elif (filetype=='txt'):
+            FileName=TK.askopenfilename(initialdir = "/",title = "Select file",filetypes\
+                                        = (("txt files","*.txt"),("all files","*.*")))
+            data = pd.read_csv(FileName, sep='\s+')
+            prompt="ID for input# {} : ".format(FileName)
+            label=input(prompt)
+            DATA_PAR=[data]
+            ID_list=[label]            
+    else:
+        if (filetype=='csv'):
+            data = pd.read_csv(fullpath) 
+            prompt="ID for input# {} : ".format(fullpath)
+            label=input(prompt)
+            DATA_PAR=[data]
+            ID_list=[label]
+            FileName=fullpath
+        elif (filetype=='txt'):
+            data = pd.read_csv(fullpath, sep='\s+')
+            prompt="ID for input# {} : ".format(fullpath)
+            label=input(prompt)
+            DATA_PAR=[data]
+            ID_list=[label]
+            FileName=fullpath
+        
+    return DATA_PAR, ID_list, FileName;
     
     
         
