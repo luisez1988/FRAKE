@@ -41,7 +41,7 @@ import seaborn as sns
 def PlotAll(DATA, IDs, xx, yy, style='Paper', xlabel='default', ylabel='default', xsize=3, ysize=3, mode='-', hold=0 \
             , palete='Normal', legendMode=True, lims=[0,0,0,0,0], varst=0, PlotName='default', sample_span=1\
                , linewith=0, markers=0, makersize=0):
-    
+
     if (xlabel=='default'):
         xlabel=xx
     if (ylabel=='default'):
@@ -56,7 +56,7 @@ def PlotAll(DATA, IDs, xx, yy, style='Paper', xlabel='default', ylabel='default'
         Pt=sns.color_palette(personalized_color)
     elif (palete=='HCONTRAST'):
         personalized_color=["#004488", '#BB5566', '#575757', '#DDAA33', '#000000', '#8A8A8A']
-        Pt=sns.color_palette(personalized_color)        
+        Pt=sns.color_palette(personalized_color)
     else:
         Pt=palete
         #sns.set_palette(Pt)
@@ -67,8 +67,8 @@ def PlotAll(DATA, IDs, xx, yy, style='Paper', xlabel='default', ylabel='default'
 
     if (style=='Paper'):
             SMALL_SIZE = 8
-            MEDIUM_SIZE = 10
-            BIGGER_SIZE = 12
+            MEDIUM_SIZE = 9
+            BIGGER_SIZE = 9
             plt.rc('text', usetex=True)
             plt.rcParams['text.latex.preamble'] = [r'\usepackage{bm}']
             plt.rc('font', family='serif')
@@ -169,13 +169,13 @@ def PlotAll(DATA, IDs, xx, yy, style='Paper', xlabel='default', ylabel='default'
                     sns.scatterplot(x=xx, y=yy, data= Frame ,marker= mode, color=Pt[a-1], style= varst[1],\
                                 hue= varst[0], legend=False)
         else:
-            
+
             if (markers==0):
                 aux_mode=mode
-            else:                    
+            else:
                 aux_mode= '%s%s' %(mode, markers[a-1])
             if (PlotName=='default'):
- 
+
                 plt.plot(Frame[xx][::sample_span],Frame[yy][::sample_span], aux_mode, label=IDs[a-1],\
                          linewidth=lw,color=Pt[a-1])
             else:
@@ -230,7 +230,7 @@ def PlotAll(DATA, IDs, xx, yy, style='Paper', xlabel='default', ylabel='default'
 def PlotID(DATA, IDs, ID, xx, yy, style='Paper', xlabel='default', ylabel='default', xsize=3, ysize=3, mode='-', \
            hold=0, palete='Normal', legendMode=True, PlotName='default'):
             #DEtermine the number of dataframes in list
-            
+
     if (xlabel=='default'):
         xlabel=xx
     if (ylabel=='default'):
@@ -244,7 +244,7 @@ def PlotID(DATA, IDs, ID, xx, yy, style='Paper', xlabel='default', ylabel='defau
         Pt=sns.color_palette(personalized_color)
     elif (palete=='HCONTRAST'):
         personalized_color=["#004488", '#BB5566', '#575757', '#DDAA33', '#000000', '#8A8A8A']
-        Pt=sns.color_palette(personalized_color)     
+        Pt=sns.color_palette(personalized_color)
     else:
         Pt=sns.light_palette(sns.xkcd_rgb[palete],NIds+1,reverse=True)
         #sns.set_palette(Pt)
@@ -302,7 +302,7 @@ def PlotID(DATA, IDs, ID, xx, yy, style='Paper', xlabel='default', ylabel='defau
                 else:
                     PlotName.plot(Frame[xx],Frame[yy], mode, \
                              label=IDs[a-1],linewidth=lw, color=Pt[0])
-                            
+
                 break
     else:
         if (PlotName=='default'):
@@ -319,8 +319,8 @@ def PlotID(DATA, IDs, ID, xx, yy, style='Paper', xlabel='default', ylabel='defau
         if (legendMode==True):
             plt.legend(edgecolor='k',fancybox=False, framealpha=1, shadow=False, \
                        borderpad=1)
-    
-    
+
+
         if (hold==0):
             plt.show()
     else:
@@ -330,7 +330,7 @@ def PlotID(DATA, IDs, ID, xx, yy, style='Paper', xlabel='default', ylabel='defau
         if (legendMode==True):
             PlotName.legend(edgecolor='k',fancybox=False, framealpha=1, shadow=False, \
                        borderpad=1)
-    
-    
+
+
         if (hold==0):
             PlotName.show()
